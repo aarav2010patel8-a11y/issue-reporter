@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Works Complaint Portal | Aarav's Gov.Connect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d47a1;
+            --secondary: #34a853;
+            --danger: #ea4335;
+            --warning: #fbbc05;
+            --light: #f8f9fa;
+            --dark: #202124;
+            --gray: #5f6368;
+            --light-gray: #dadce0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f7fa;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--primary);
+            font-size: 28px;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .owner-tag {
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--gray);
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(26, 115, 232, 0.1);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #2d8c47;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Form Container */
+        .form-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        .form-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .tab-btn {
+            padding: 15px 25px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--gray);
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus, 
+        .form-group textarea:focus, 
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .otp-section {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+        }
+
+        .otp-section .form-group {
+            flex: 1;
+        }
+
+        .otp-btn {
+            height: 48px;
+            white-space: nowrap;
+        }
+
+        .file-upload {
+            border: 2px dashed var(--light-gray);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+        }
+
+        .file-upload i {
+            font-size: 48px;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .file-upload p {
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+
+        .file-upload span {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .preview-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .preview-container.active {
+            display: block;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: var(--border-radius);
+            margin-top: 15px;
+        }
+
+        .google-auth {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .google-btn {
+            background-color: white;
+            border: 1px solid var(--light-gray);
+            padding: 12px 25px;
+            border-radius: var(--border-radius);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .google-btn:hover {
+            background-color: #f8f9fa;
+        }
+
+        .google-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Issues Section */
+        .issues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .issue-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .issue-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .issue-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .issue-content {
+            padding: 20px;
+        }
+
+        .issue-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .issue-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .issue-status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-inprogress {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-resolved {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: #b0b7c3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #3c4043;
+            color: #9aa0a6;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 32px;
+            }
+            
+            .form-container {
+                padding: 25px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+
+        /* Success Message */
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-road"></i>
+                    <h1>Gov.<span>Connect</span></h1>
+                    <div class="owner-tag">By Aarav</div>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-exclamation-circle"></i> Report Issue</a></li>
+                        <li><a href="#"><i class="fas fa-list"></i> Issues List</a></li>
+                        <li><a href="#"><i class="fas fa-chart-line"></i> Status</a></li>
+                        <li><a href="#"><i class="fas fa-users"></i> Community</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Log In</button>
+                    <button class="btn btn-primary" id="signupBtn"><i class="fas fa-user-plus"></i> Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Report Public Infrastructure Issues</h2>
+            <p>Help improve your community by reporting damaged roads, broken facilities, and other public works issues directly to government authorities.</p>
+            <button class="btn btn-secondary btn-large" id="reportNowBtn">
+                <i class="fas fa-bullhorn"></i> Report an Issue Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Report Form Section -->
+            <div class="section-title">
+                <h2>Report a Public Works Issue</h2>
+                <p>Fill out the form below to report damaged roads, poor infrastructure, or other public issues. Government officials will review your report and take necessary action.</p>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i> Your report has been submitted successfully! A reference ID has been sent to your email.
+            </div>
+
+            <!-- Form Container -->
+            <div class="form-container">
+                <!-- Form Tabs -->
+                <div class="form-tabs">
+                    <button class="tab-btn active" data-tab="register-tab">Register / Login</button>
+                    <button class="tab-btn" data-tab="report-tab">Report Issue</button>
+                </div>
+
+                <!-- Register Tab -->
+                <div class="tab-content active" id="register-tab">
+                    <form id="registerForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullName"><i class="fas fa-user"></i> Full Name</label>
+                                <input type="text" id="fullName" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                                <input type="email" id="email" placeholder="Enter your email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="mobile"><i class="fas fa-mobile-alt"></i> Mobile Number</label>
+                                <input type="tel" id="mobile" placeholder="Enter 10-digit mobile number" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="location"><i class="fas fa-map-marker-alt"></i> Location</label>
+                                <input type="text" id="location" placeholder="City, State" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="otp"><i class="fas fa-key"></i> OTP Verification</label>
+                            <div class="otp-section">
+                                <div class="form-group">
+                                    <input type="text" id="otp" placeholder="Enter OTP" maxlength="6">
+                                </div>
+                                <button type="button" class="btn btn-outline otp-btn" id="sendOtpBtn">
+                                    <i class="fas fa-paper-plane"></i> Send OTP
+                                </button>
+                            </div>
+                            <small class="otp-message" id="otpMessage" style="display:none; color: var(--secondary); margin-top: 5px;">OTP sent to your mobile number</small>
+                        </div>
+                        
+                        <div class="google-auth">
+                            <p>Or sign up quickly with</p>
+                            <button type="button" class="google-btn" id="googleSignInBtn">
+                                <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google Logo">
+                                Sign up with Google
+                            </button>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">
+                            <i class="fas fa-check-circle"></i> Verify & Continue
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Report Tab -->
+                <div class="tab-content" id="report-tab">
+                    <form id="reportForm">
+                        <div class="form-group">
+                            <label for="issueType"><i class="fas fa-road"></i> Type of Issue</label>
+                            <select id="issueType" required>
+                                <option value="">Select issue type</option>
+                                <option value="damaged_road">Damaged Road / Potholes</option>
+                                <option value="no_road">No Road / Missing Infrastructure</option>
+                                <option value="dirty_area">Dirty Public Area</option>
+                                <option value="broken_streetlight">Broken Streetlight</option>
+                                <option value="water_leakage">Water Leakage / Pipeline Issue</option>
+                                <option value="garbage">Garbage Not Collected</option>
+                                <option value="other">Other Issue</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="issueLocation"><i class="fas fa-map-pin"></i> Issue Location</label>
+                            <input type="text" id="issueLocation" placeholder="Enter exact location (landmarks, area)" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="issueDescription"><i class="fas fa-edit"></i> Description</label>
+                            <textarea id="issueDescription" rows="4" placeholder="Describe the issue in detail..." required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-camera"></i> Upload Photo Evidence</label>
+                            <div class="file-upload" id="fileUploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drag & drop or click to upload</p>
+                                <span>Max file size: 5MB (JPG, PNG, GIF)</span>
+                                <input type="file" id="issuePhoto" accept="image/*" style="display: none;">
+                            </div>
+                            <div class="preview-container" id="previewContainer">
+                                <p>Preview:</p>
+                                <img id="imagePreview" class="image-preview" src="" alt="Preview">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="priority"><i class="fas fa-exclamation-triangle"></i> Priority Level</label>
+                            <select id="priority" required>
+                                <option value="low">Low - Minor inconvenience</option>
+                                <option value="medium" selected>Medium - Needs attention</option>
+                                <option value="high">High - Safety hazard</option>
+                                <option value="critical">Critical - Immediate action required</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-secondary" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Submit Report to Government
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Recent Issues Section -->
+            <div class="section-title">
+                <h2>Recently Reported Issues</h2>
+                <p>Community reports that have been submitted to government authorities</p>
+            </div>
+            
+            <div class="issues-grid">
+                <!-- Issue Card 1 -->
+                <div class="issue-card">
+                    <img src="https://images.unsplash.com/photo-1542221767-2dc73ee06d0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Damaged Road" class="issue-img">
+                    <div class="issue-content">
+                        <h3 class="issue-title">Large Pothole on Main Street</h3>
+                        <div class="issue-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Downtown Area</span>
+                            <span>2 days ago</span>
+                        </div>
+                        <p>Deep pothole causing traffic issues and vehicle damage. Reported by Rohan Sharma.</p>
+                        <div class="issue-status status-inprogress">In Progress</div>
+                    </div>
+                </div>
+                
+                <!-- Issue Card 2 -->
+                <div class="issue-card">
+                    <img src="https://images.unsplash.com/photo-1570481662006-a3a1374699e8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Broken Streetlight" class="issue-img">
+                    <div class="issue-content">
+                        <h3 class="issue-title">Broken Streetlight in Park Area</h3>
+                        <div class="issue-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Central Park</span>
+                            <span>5 days ago</span>
+                        </div>
+                        <p>Streetlight not working for over a week, creating safety concerns at night.</p>
+                        <div class="issue-status status-pending">Pending Review</div>
+                    </div>
+                </div>
+                
+                <!-- Issue Card 3 -->
+                <div class="issue-card">
+                    <img src="https://images.unsplash.com/photo-1550147760-44e91d705e0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Garbage Issue" class="issue-img">
+                    <div class="issue-content">
+                        <h3 class="issue-title">Garbage Not Collected for 10 Days</h3>
+                        <div class="issue-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Residential Zone B</span>
+                            <span>1 week ago</span>
+                        </div>
+                        <p>Municipal garbage collection missed, causing health and sanitation issues.</p>
+                        <div class="issue-status status-resolved">Resolved</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Gov.Connect</h3>
+                    <p>A platform to connect citizens with government authorities to report and resolve public infrastructure issues efficiently.</p>
+                    <p><strong>Owner:</strong> Aarav</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">How to Report</a></li>
+                        <li><a href="#">Track Your Report</a></li>
+                        <li><a href="#">Government Departments</a></li>
+                        <li><a href="#">Community Guidelines</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Issue Categories</h3>
+                    <ul>
+                        <li><a href="#">Roads & Highways</a></li>
+                        <li><a href="#">Water Supply</a></li>
+                        <li><a href="#">Electricity Issues</a></li>
+                        <li><a href="#">Sanitation & Garbage</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@govconnect.com</li>
+                        <li><i class="fas fa-phone"></i> 1800-XXX-XXXX (Toll Free)</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Government Coordination Cell</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Gov.Connect - Public Works Complaint Portal. All rights reserved. | Designed by Aarav</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const registerForm = document.getElementById('registerForm');
+        const reportForm = document.getElementById('reportForm');
+        const sendOtpBtn = document.getElementById('sendOtpBtn');
+        const otpMessage = document.getElementById('otpMessage');
+        const reportNowBtn = document.getElementById('reportNowBtn');
+        const successMessage = document.getElementById('successMessage');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const issuePhoto = document.getElementById('issuePhoto');
+        const previewContainer = document.getElementById('previewContainer');
+        const imagePreview = document.getElementById('imagePreview');
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const googleSignInBtn = document.getElementById('googleSignInBtn');
+        
+        // Tab Switching
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Update active tab button
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show corresponding tab content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === tabId) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+        
+        // Send OTP Button
+        sendOtpBtn.addEventListener('click', () => {
+            const mobileInput = document.getElementById('mobile');
+            const mobile = mobileInput.value;
+            
+            if (mobile.length === 10 && /^\d+$/.test(mobile)) {
+                // Simulate OTP sending
+                sendOtpBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                sendOtpBtn.disabled = true;
+                
+                setTimeout(() => {
+                    sendOtpBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send OTP';
+                    sendOtpBtn.disabled = false;
+                    otpMessage.style.display = 'block';
+                    
+                    // Hide message after 5 seconds
+                    setTimeout(() => {
+                        otpMessage.style.display = 'none';
+                    }, 5000);
+                }, 1500);
+            } else {
+                alert('Please enter a valid 10-digit mobile number');
+            }
+        });
+        
+        // File Upload Handling
+        fileUploadArea.addEventListener('click', () => {
+            issuePhoto.click();
+        });
+        
+        issuePhoto.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    previewContainer.classList.add('active');
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Drag and Drop File Upload
+        fileUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUploadArea.style.borderColor = 'var(--primary)';
+            fileUploadArea.style.backgroundColor = 'rgba(26, 115, 232, 0.05)';
+        });
+        
+        fileUploadArea.addEventListener('dragleave', () => {
+            fileUploadArea.style.borderColor = 'var(--light-gray)';
+            fileUploadArea.style.backgroundColor = 'transparent';
+        });
+        
+        fileUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUploadArea.style.borderColor = 'var(--light-gray)';
+            fileUploadArea.style.backgroundColor = 'transparent';
+            
+            if (e.dataTransfer.files.length) {
+                issuePhoto.files = e.dataTransfer.files;
+                const changeEvent = new Event('change');
+                issuePhoto.dispatchEvent(changeEvent);
+            }
+        });
+        
+        // Register Form Submission
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const mobile = document.getElementById('mobile').value;
+            const location = document.getElementById('location').value;
+            const otp = document.getElementById('otp').value;
+            
+            // Basic validation
+            if (!fullName || !email || !mobile || !location) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            if (mobile.length !== 10 || !/^\d+$/.test(mobile)) {
+                alert('Please enter a valid 10-digit mobile number');
+                return;
+            }
+            
+            if (!otp || otp.length !== 6) {
+                alert('Please enter the 6-digit OTP');
+                return;
+            }
+            
+            // Simulate registration process
+            const submitBtn = registerForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                // Switch to report tab after successful registration
+                document.querySelector('[data-tab="report-tab"]').click();
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                
+                // Display welcome message
+                alert(`Welcome ${fullName}! You can now report public issues.`);
+            }, 2000);
+        });
+        
+        // Report Form Submission
+        reportForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const issueType = document.getElementById('issueType').value;
+            const issueLocation = document.getElementById('issueLocation').value;
+            const issueDescription = document.getElementById('issueDescription').value;
+            const priority = document.getElementById('priority').value;
+            
+            // Basic validation
+            if (!issueType || !issueLocation || !issueDescription) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            // Simulate submission to government
+            const submitBtn = reportForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                // Show success message
+                successMessage.classList.add('active');
+                
+                // Reset form
+                reportForm.reset();
+                previewContainer.classList.remove('active');
+                imagePreview.src = '';
+                
+                // Restore button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                
+                // Scroll to success message
+                successMessage.scrollIntoView({ behavior: 'smooth' });
+                
+                // Hide success message after 10 seconds
+                setTimeout(() => {
+                    successMessage.classList.remove('active');
+                }, 10000);
+                
+                // Generate reference ID
+                const refId = 'GOV-' + Math.floor(100000 + Math.random() * 900000);
+                alert(`Report submitted successfully!\nYour Reference ID: ${refId}\nGovernment authorities will review your report and take appropriate action.`);
+            }, 3000);
+        });
+        
+        // Report Now Button
+        reportNowBtn.addEventListener('click', () => {
+            // Switch to register tab if user not registered
+            document.querySelector('[data-tab="register-tab"]').click();
+            window.scrollTo({
+                top: document.querySelector('.form-container').offsetTop - 100,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Auth Buttons
+        loginBtn.addEventListener('click', () => {
+            alert('Login functionality would be implemented here with backend integration.');
+        });
+        
+        signupBtn.addEventListener('click', () => {
+            document.querySelector('[data-tab="register-tab"]').click();
+            window.scrollTo({
+                top: document.querySelector('.form-container').offsetTop - 100,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Google Sign In
+        googleSignInBtn.addEventListener('click', () => {
+            // Simulate Google Sign In
+            googleSignInBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
+            
+            setTimeout(() => {
+                // Auto-fill form with mock Google data
+                document.getElementById('fullName').value = 'Aarav Sharma';
+                document.getElementById('email').value = 'aarav.sharma@example.com';
+                document.getElementById('mobile').value = '9876543210';
+                document.getElementById('location').value = 'New Delhi, Delhi';
+                
+                googleSignInBtn.innerHTML = '<img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google Logo"> Signed in with Google';
+                
+                alert('Google account connected successfully! Please complete OTP verification.');
+            }, 1500);
+        });
+        
+        // Initialize with some sample data for demo
+        window.addEventListener('DOMContentLoaded', () => {
+            // Auto-fill sample data for demo purposes
+            document.getElementById('fullName').value = 'Aarav';
+            document.getElementById('email').value = 'aarav@example.com';
+            document.getElementById('mobile').value = '9876543210';
+            document.getElementById('location').value = 'Mumbai, Maharashtra';
+        });
+    </script>
+</body>
+</html>
